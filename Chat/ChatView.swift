@@ -1,7 +1,8 @@
 import SwiftUI
 
-struct ContentView: View {
-    private let viewModel = ChatBotViewModel()
+struct ChatView: View {
+    @EnvironmentObject var data : HistoryChat
+    let viewModel = ComunicationModel()
     @State private var textField = ""
     @State private var showLoader: Bool = false
     var body: some View {
@@ -42,7 +43,7 @@ struct ContentView: View {
         textField = ""
         if !question.isEmpty {
             Task {
-                try await viewModel.generateAnswer(question: question)
+                try await viewModel.testChat(question: question, historyData: data)
                 showLoader = false
                 
             }
@@ -71,5 +72,5 @@ extension View {
 }
 
 #Preview {
-    ContentView()
+    ChatView()
 }
